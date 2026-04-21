@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora Spring Boot</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main class="page-shell">
+        <section class="calculator-area" aria-labelledby="page-title">
+            <div class="intro">
+                <img src="math-board.png" alt="Quadro com anotacoes matematicas" class="intro-image">
+                <div>
+                    <p class="eyebrow">Spring Boot API</p>
+                    <h1 id="page-title">Calculadora REST</h1>
+                    <p class="intro-text">Informe os valores, escolha a operacao e veja a resposta do endpoint.</p>
+                </div>
+            </div>
+
+            <form class="calculator" id="calculator-form">
+                <label for="operation">Operacao</label>
+                <select id="operation" name="operation">
+                    <option value="sum">Soma</option>
+                    <option value="subtraction">Subtracao</option>
+                    <option value="multiplication">Multiplicacao</option>
+                    <option value="division">Divisao</option>
+                    <option value="mean">Media</option>
+                    <option value="sqrt">Raiz quadrada</option>
+                </select>
+
+                <label for="number-one">Primeiro numero</label>
+                <input type="text" id="number-one" name="numberOne" placeholder="Ex: 10 ou 10,5" autocomplete="off" required>
+
+                <label for="number-two" id="number-two-label">Segundo numero</label>
+                <input type="text" id="number-two" name="numberTwo" placeholder="Ex: 5 ou 5,5" autocomplete="off" required>
+
+                <button type="submit">Calcular</button>
+            </form>
+
+            <section class="result-panel" aria-live="polite">
+                <p class="result-label">Resultado</p>
+                <p class="result-value" id="result-value">Aguardando calculo</p>
+                <p class="endpoint-value" id="endpoint-value">Endpoint ainda nao chamado</p>
+            </section>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
