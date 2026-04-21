@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRUD Person - Spring Boot</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main class="page">
+        <section class="intro">
+            <p class="eyebrow">Java + Spring Boot</p>
+            <h1>Springboot API Test</h1>
+            <p class="intro-text">
+                Essa pagina faz requisicoes reais para a API do projeto. Os botoes abaixo chamam os endpoints de listagem,
+                busca por id, criacao, atualizacao e exclusao.
+            </p>
+        </section>
+
+        <section class="panel">
+            <div class="field endpoint-picker">
+                <label for="endpoint-action">Endpoint</label>
+                <select id="endpoint-action">
+                    <option value="findAll">GET /person</option>
+                    <option value="findById">GET /person/{id}</option>
+                    <option value="create">POST /person</option>
+                    <option value="update">PUT /person</option>
+                    <option value="delete">DELETE /person/{id}</option>
+                </select>
+            </div>
+
+            <div class="grid">
+                <div class="field">
+                    <label for="person-id">ID</label>
+                    <input id="person-id" type="number" min="1" placeholder="Ex: 1">
+                </div>
+
+                <div class="field">
+                    <label for="gender">Gender</label>
+                    <select id="gender">
+                        <option value="">Selecione</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                    </select>
+                </div>
+
+                <div class="field">
+                    <label for="first-name">First Name</label>
+                    <input id="first-name" type="text" placeholder="Ex: Luan">
+                </div>
+
+                <div class="field">
+                    <label for="last-name">Last Name</label>
+                    <input id="last-name" type="text" placeholder="Ex: Abreu">
+                </div>
+
+                <div class="field full">
+                    <label for="address">Address</label>
+                    <input id="address" type="text" placeholder="Ex: Criciuma - SC">
+                </div>
+            </div>
+
+            <div class="single-action">
+                <button type="button" id="send-request">Enviar requisicao</button>
+            </div>
+
+            <section class="response" id="response-panel" aria-live="polite">
+                <p class="response-meta" id="response-meta">Resposta da API aparecera aqui.</p>
+                <textarea id="response-body" readonly>Sem requisicao ainda.</textarea>
+            </section>
+
+            <p class="tips" id="endpoint-help">
+                Para GET /person, basta clicar no botao. Para os outros endpoints, preencha os campos necessarios antes de enviar.
+            </p>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
