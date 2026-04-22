@@ -18,7 +18,7 @@ const endpointHelpText = {
     delete: "DELETE /person/{id} precisa apenas do campo ID."
 };
 
-function personPayload() {
+function personPayload(includeId = true) {
     const payload = {
         firstName: firstNameInput.value.trim(),
         lastName: lastNameInput.value.trim(),
@@ -27,7 +27,7 @@ function personPayload() {
     };
 
     const id = idInput.value.trim();
-    if (id) {
+    if (includeId && id) {
         payload.id = Number(id);
     }
 
@@ -86,8 +86,14 @@ async function callApi(action) {
             break;
         case "create":
             method = "POST";
+            idInput.value = "";
             options.headers = { "Content-Type": "application/json" };
-            options.body = JSON.stringify(personPayload());
+            options.body = JSON.stringify({
+                firstName: firstNameInput.value.trim(),
+                lastName: lastNameInput.value.trim(),
+                address: addressInput.value.trim(),
+                gender: genderInput.value
+            });
             break;
         case "update":
             method = "PUT";
@@ -135,6 +141,7 @@ function updateFieldAvailability() {
 
     if (createMode) {
         idInput.disabled = true;
+        idInput.value = "";
         firstNameInput.disabled = false;
         lastNameInput.disabled = false;
         addressInput.disabled = false;
