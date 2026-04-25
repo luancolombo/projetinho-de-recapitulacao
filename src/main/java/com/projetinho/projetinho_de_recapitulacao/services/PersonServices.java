@@ -1,6 +1,8 @@
 package com.projetinho.projetinho_de_recapitulacao.services;
 
+import com.projetinho.projetinho_de_recapitulacao.dto.PersonDTO;
 import com.projetinho.projetinho_de_recapitulacao.exception.ResourceNotFoundException;
+import com.projetinho.projetinho_de_recapitulacao.mapper.ObjectMapper;
 import com.projetinho.projetinho_de_recapitulacao.model.Person;
 import com.projetinho.projetinho_de_recapitulacao.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +12,9 @@ import org.springframework.web.servlet.resource.ResourceUrlProvider;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.logging.Logger;
+
+import static com.projetinho.projetinho_de_recapitulacao.mapper.ObjectMapper.parseListObject;
+import static com.projetinho.projetinho_de_recapitulacao.mapper.ObjectMapper.parseObject;
 
 @Service
 public class PersonServices {
@@ -27,21 +32,23 @@ public class PersonServices {
 
     private Logger logger = Logger.getLogger(PersonServices.class.getName());
 
-    public List<Person> findAll() {
+    public List<PersonDTO> findAll() {
         logger.info("Finding all people!");
-        return repository.findAll();
+        return parseListObject(repository.findAll(),  PersonDTO.class);
     }
 
-    public Person findById(Long id) {
+    public PersonDTO findById(Long id) {
         logger.info("Find one person!");
-        return repository.findById(id)
+        var entity = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Person not found!"));
+        return parseObject( entity, PersonDTO.class);
     }
-    public Person create(Person person){
+    public PersonDTO create(PersonDTO person){
         logger.info("Create new person!");
-        return repository.save(person);
+        var entity = parseObject(person, Person.class);
+        return parseObject(repository.save(entity), PersonDTO.class);
     }
-    public Person update(Person person){
+    public PersonDTO update(PersonDTO person){
         logger.info("Update person!");
         Person entity = repository.findById(person.getId())
                 .orElseThrow(() -> new ResourceNotFoundException("No records found for this Id!"));
@@ -51,7 +58,7 @@ public class PersonServices {
         entity.setAddress(person.getAddress());
         entity.setGender(person.getGender());
 
-        return repository.save(person);
+        return parseObject(repository.save(entity), PersonDTO.class);
     }
     public void delete(Long id){
         logger.info("Delete person!");
