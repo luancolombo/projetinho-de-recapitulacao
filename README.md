@@ -33,10 +33,28 @@ Ainda assim, a ideia não é parar por aqui. O projeto vai continuar sendo expan
 
 - Java
 - Spring Boot
+- Spring Data JPA
 - Maven
+- MySQL
+- Dozer (mapeamento entre Entity e DTO)
+- Flyway (migrations)
 - HTML
 - CSS
 - JavaScript
+
+## Idéias para Implementar Futuramente
+
+- HATEOAS
+- Mockito
+- JUnit 5
+- Swagger
+- Upload e Download de arquivos
+- Importação e Exportação de Planilhas Excel e CSV
+- JasperReports
+- Spring Mail
+- JWT e Spring Security
+- Docker e Kubernetes
+- Deploy na Nuvem
 
 ## Como rodar
 
