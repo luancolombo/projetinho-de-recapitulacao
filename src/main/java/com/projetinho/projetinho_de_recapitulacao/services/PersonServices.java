@@ -1,8 +1,9 @@
 package com.projetinho.projetinho_de_recapitulacao.services;
 
-import com.projetinho.projetinho_de_recapitulacao.dto.PersonDTO;
+import com.projetinho.projetinho_de_recapitulacao.dto.v1.PersonDTO;
+import com.projetinho.projetinho_de_recapitulacao.dto.v2.PersonDTOV2;
 import com.projetinho.projetinho_de_recapitulacao.exception.ResourceNotFoundException;
-import com.projetinho.projetinho_de_recapitulacao.mapper.ObjectMapper;
+import com.projetinho.projetinho_de_recapitulacao.mapper.custom.PersonMapper;
 import com.projetinho.projetinho_de_recapitulacao.model.Person;
 import com.projetinho.projetinho_de_recapitulacao.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,8 @@ public class PersonServices {
 
     @Autowired
     PersonRepository repository;
+    @Autowired
+    PersonMapper converter;
     @Autowired
     private ResourceUrlProvider resourceUrlProvider;
 
@@ -47,6 +50,11 @@ public class PersonServices {
         logger.info("Create new person!");
         var entity = parseObject(person, Person.class);
         return parseObject(repository.save(entity), PersonDTO.class);
+    }
+    public PersonDTOV2 createV2(PersonDTOV2 person){
+        logger.info("Create new person V2!");
+        var entity = converter.convertDTOToEntity(person);
+        return converter.convertEntityToDTO(repository.save(entity));
     }
     public PersonDTO update(PersonDTO person){
         logger.info("Update person!");

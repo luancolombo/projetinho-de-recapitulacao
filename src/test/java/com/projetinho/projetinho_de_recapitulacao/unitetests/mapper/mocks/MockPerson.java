@@ -1,6 +1,6 @@
 package com.projetinho.projetinho_de_recapitulacao.unitetests.mapper.mocks;
 
-import com.projetinho.projetinho_de_recapitulacao.dto.PersonDTO;
+import com.projetinho.projetinho_de_recapitulacao.dto.v1.PersonDTO;
 import com.projetinho.projetinho_de_recapitulacao.model.Person;
 
 import java.util.ArrayList;

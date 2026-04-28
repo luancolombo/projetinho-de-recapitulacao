@@ -1,4 +1,4 @@
-package com.projetinho.projetinho_de_recapitulacao.dto;
+package com.projetinho.projetinho_de_recapitulacao.dto.v1;
 
 import java.io.Serializable;
 import java.util.Objects;
