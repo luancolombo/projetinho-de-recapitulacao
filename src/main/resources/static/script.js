@@ -5,16 +5,19 @@ const addressInput = document.getElementById("address");
 const genderInput = document.getElementById("gender");
 const endpointAction = document.getElementById("endpoint-action");
 const sendRequestButton = document.getElementById("send-request");
+const searchAction = document.getElementById("search-action");
+const searchRecordButton = document.getElementById("search-record");
 const endpointHelp = document.getElementById("endpoint-help");
 const responsePanel = document.getElementById("response-panel");
 const responseMeta = document.getElementById("response-meta");
 const responseBody = document.getElementById("response-body");
+let updateLoaded = false;
 
 const endpointHelpText = {
     findAll: "GET /person lista todas as pessoas mockadas pelo servico.",
     findById: "GET /person/{id} precisa apenas do campo ID.",
     create: "POST /person envia os dados preenchidos no formulario em JSON.",
-    update: "PUT /person envia os dados do formulario para atualizar uma pessoa.",
+    update: "PUT /person pede um ID, usa Search para carregar os dados e depois envia a atualizacao.",
     delete: "DELETE /person/{id} precisa apenas do campo ID."
 };
 
@@ -96,6 +99,10 @@ async function callApi(action) {
             });
             break;
         case "update":
+            if (!updateLoaded) {
+                showResponse("PUT", "/person", "-", "Use o Search para carregar a pessoa antes de atualizar.", true);
+                return;
+            }
             method = "PUT";
             options.headers = { "Content-Type": "application/json" };
             options.body = JSON.stringify(personPayload());
@@ -121,6 +128,47 @@ async function callApi(action) {
     }
 }
 
+function fillPersonForm(person) {
+    idInput.value = person.id ?? "";
+    firstNameInput.value = person.firstName ?? "";
+    lastNameInput.value = person.lastName ?? "";
+    addressInput.value = person.address ?? "";
+    genderInput.value = person.gender ?? "";
+}
+
+async function searchRecordForUpdate() {
+    if (endpointAction.value !== "update") {
+        return;
+    }
+
+    if (!requireId("GET")) {
+        return;
+    }
+
+    const endpoint = "/person/" + encodeURIComponent(idInput.value.trim());
+
+    try {
+        const response = await fetch(endpoint);
+        const body = await parseResponse(response);
+
+        if (!response.ok) {
+            updateLoaded = false;
+            updateFieldAvailability();
+            showResponse("GET", endpoint, response.status, body, true);
+            return;
+        }
+
+        fillPersonForm(body);
+        updateLoaded = true;
+        updateFieldAvailability();
+        showResponse("GET", endpoint, response.status, body, false);
+    } catch (error) {
+        updateLoaded = false;
+        updateFieldAvailability();
+        showResponse("GET", endpoint, "erro", "Nao foi possivel buscar a pessoa para atualizacao.", true);
+    }
+}
+
 function updateEndpointHelp() {
     endpointHelp.textContent = endpointHelpText[endpointAction.value];
 }
@@ -131,13 +179,14 @@ function updateFieldAvailability() {
     const idOnlyMode = action === "delete" || action === "findById";
     const createMode = action === "create";
     const updateMode = action === "update";
+    const updateEditable = updateMode && updateLoaded;
 
     idInput.disabled = findAllMode;
 
-    firstNameInput.disabled = findAllMode || idOnlyMode;
-    lastNameInput.disabled = findAllMode || idOnlyMode;
-    addressInput.disabled = findAllMode || idOnlyMode;
-    genderInput.disabled = findAllMode || idOnlyMode;
+    firstNameInput.disabled = findAllMode || idOnlyMode || (updateMode && !updateEditable);
+    lastNameInput.disabled = findAllMode || idOnlyMode || (updateMode && !updateEditable);
+    addressInput.disabled = findAllMode || idOnlyMode || (updateMode && !updateEditable);
+    genderInput.disabled = findAllMode || idOnlyMode || (updateMode && !updateEditable);
 
     if (createMode) {
         idInput.disabled = true;
@@ -150,19 +199,30 @@ function updateFieldAvailability() {
 
     if (updateMode) {
         idInput.disabled = false;
-        firstNameInput.disabled = false;
-        lastNameInput.disabled = false;
-        addressInput.disabled = false;
-        genderInput.disabled = false;
     }
 }
 
 function handleEndpointChange() {
+    updateLoaded = false;
     updateEndpointHelp();
+    searchAction.classList.toggle("hidden", endpointAction.value !== "update");
     updateFieldAvailability();
 }
 
 endpointAction.addEventListener("change", handleEndpointChange);
+searchRecordButton.addEventListener("click", searchRecordForUpdate);
+idInput.addEventListener("input", () => {
+    if (endpointAction.value !== "update") {
+        return;
+    }
+
+    updateLoaded = false;
+    firstNameInput.value = "";
+    lastNameInput.value = "";
+    addressInput.value = "";
+    genderInput.value = "";
+    updateFieldAvailability();
+});
 sendRequestButton.addEventListener("click", () => callApi(endpointAction.value));
 
 handleEndpointChange();

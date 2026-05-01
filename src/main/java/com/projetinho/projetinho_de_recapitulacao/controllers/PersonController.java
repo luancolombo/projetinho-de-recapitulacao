@@ -34,7 +34,6 @@ public class PersonController {
     )
     public PersonDTO findById(@PathVariable("id") Long id){
         var person = service.findById(id);
-        person.setBirthDay(new Date());
         return person;
     }
 

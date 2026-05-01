@@ -1,5 +1,7 @@
 package com.projetinho.projetinho_de_recapitulacao.dto.v2;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
@@ -13,6 +15,7 @@ public class PersonDTOV2 implements Serializable {
     private String lastName;
     private String address;
     private String gender;
+    @JsonFormat(pattern = "dd/MM/yyyy")
     private Date birthDate;
 
     public PersonDTOV2() {}

@@ -131,6 +131,17 @@ textarea {
 
 .single-action {
     margin-top: 18px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.secondary-action {
+    display: flex;
+}
+
+.hidden {
+    display: none;
 }
 
 button {
@@ -144,6 +155,17 @@ button {
 
 button:hover {
     background: var(--accent-strong);
+}
+
+.secondary-button {
+    color: var(--accent);
+    background: #ffffff;
+    border: 1px solid var(--accent);
+}
+
+.secondary-button:hover {
+    color: #ffffff;
+    background: var(--accent);
 }
 
 .response {
