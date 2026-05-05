@@ -34,7 +34,7 @@ public class PersonServices {
         this.repository = repository;
     }
 
-    private Logger logger = Logger.getLogger(PersonServices.class.getName());
+    private final Logger logger = Logger.getLogger(PersonServices.class.getName());
 
     public List<PersonDTO> findAll() {
         logger.info("Finding all people!");
