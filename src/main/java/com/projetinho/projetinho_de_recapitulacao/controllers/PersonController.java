@@ -3,6 +3,7 @@ package com.projetinho.projetinho_de_recapitulacao.controllers;
 import com.projetinho.projetinho_de_recapitulacao.dto.v1.PersonDTO;
 import com.projetinho.projetinho_de_recapitulacao.dto.v2.PersonDTOV2;
 import com.projetinho.projetinho_de_recapitulacao.services.PersonServices;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -49,7 +50,7 @@ public class PersonController {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public PersonDTO create(@RequestBody PersonDTO person){
+    public PersonDTO create(@Valid @RequestBody PersonDTO person){
         return service.create(person);
     }
 
@@ -57,7 +58,7 @@ public class PersonController {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public PersonDTO update(@RequestBody PersonDTO person){
+    public PersonDTO update(@Valid @RequestBody PersonDTO person){
         return service.update(person);
     }
 

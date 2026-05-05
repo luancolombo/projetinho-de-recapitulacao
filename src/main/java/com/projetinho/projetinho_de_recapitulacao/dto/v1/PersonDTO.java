@@ -7,6 +7,7 @@ package com.projetinho.projetinho_de_recapitulacao.dto.v1;
 //import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.projetinho.projetinho_de_recapitulacao.serializer.GenderSerializer;
+import jakarta.validation.constraints.NotBlank;
 import org.springframework.hateoas.RepresentationModel;
 
 import java.io.Serializable;
@@ -20,8 +21,10 @@ public class PersonDTO extends RepresentationModel<PersonDTO> implements Seriali
 
     private Long id;
     //@JsonProperty("first_name")
+    @NotBlank(message = "First name is required!")
     private String firstName;
     //@JsonProperty("last_name")
+    @NotBlank(message = "Last name is required!")
     private String lastName;
     private String address;
     //@JsonIgnore

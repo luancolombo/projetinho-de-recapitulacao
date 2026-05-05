@@ -3,8 +3,11 @@ package com.projetinho.projetinho_de_recapitulacao.exception.handler;
 import com.projetinho.projetinho_de_recapitulacao.exception.ExceptionResponse;
 import com.projetinho.projetinho_de_recapitulacao.exception.RequiredObjectIsNullException;
 import com.projetinho.projetinho_de_recapitulacao.exception.ResourceNotFoundException;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
@@ -39,6 +42,29 @@ public class CustomEntityResponseHandler extends ResponseEntityExceptionHandler 
                 new Date(),
                 ex.getMessage(),
                 request.getDescription(false));
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
+    @Override
+    protected ResponseEntity<Object> handleMethodArgumentNotValid(
+            MethodArgumentNotValidException ex,
+            HttpHeaders headers,
+            HttpStatusCode status,
+            WebRequest request) {
+
+        String details = ex.getBindingResult()
+                .getFieldErrors()
+                .stream()
+                .map(field -> field.getField() + ": " + field.getDefaultMessage())
+                .findFirst()
+                .orElse("Validation failed");
+
+        ExceptionResponse response = new ExceptionResponse(
+                new Date(),
+                "Validation failed",
+                details
+        );
+
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 }
