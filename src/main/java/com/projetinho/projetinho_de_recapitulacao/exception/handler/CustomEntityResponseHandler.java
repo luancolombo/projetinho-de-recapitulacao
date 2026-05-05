@@ -3,6 +3,7 @@ package com.projetinho.projetinho_de_recapitulacao.exception.handler;
 import com.projetinho.projetinho_de_recapitulacao.exception.ExceptionResponse;
 import com.projetinho.projetinho_de_recapitulacao.exception.RequiredObjectIsNullException;
 import com.projetinho.projetinho_de_recapitulacao.exception.ResourceNotFoundException;
+import io.micrometer.common.lang.NonNull;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -47,10 +48,10 @@ public class CustomEntityResponseHandler extends ResponseEntityExceptionHandler 
 
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(
-            MethodArgumentNotValidException ex,
-            HttpHeaders headers,
-            HttpStatusCode status,
-            WebRequest request) {
+            @NonNull MethodArgumentNotValidException ex,
+            @NonNull HttpHeaders headers,
+            @NonNull HttpStatusCode status,
+            @NonNull WebRequest request) {
 
         String details = ex.getBindingResult()
                 .getFieldErrors()
