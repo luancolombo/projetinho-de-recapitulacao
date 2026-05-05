@@ -25,7 +25,7 @@ Também comecei a usar um frontend simples em HTML, CSS e JavaScript só para co
 
 ## Estado atual
 
-Hoje o projeto funciona como uma API simples com algumas operações matemáticas e uma interface básica para consumir esses endpoints.
+Hoje o projeto funciona como uma API simples com operações matemáticas, CRUD de `Person`, integração com banco de dados, migrations, testes automatizados e uma interface básica para consumir os endpoints.
 
 Ainda assim, a ideia não é parar por aqui. O projeto vai continuar sendo expandido conforme eu estudar mais recursos do Spring Boot e do restante do ecossistema Java.
 
@@ -34,19 +34,20 @@ Ainda assim, a ideia não é parar por aqui. O projeto vai continuar sendo expan
 - Java
 - Spring Boot
 - Spring Data JPA
+- Spring HATEOAS
+- Spring Validation
 - Maven
 - MySQL
-- Dozer (mapeamento entre Entity e DTO)
 - Flyway (migrations)
+- Dozer (mapeamento entre Entity e DTO)
+- JUnit 5
+- Mockito
 - HTML
 - CSS
 - JavaScript
 
-## Idéias para Implementar Futuramente
+## Ideias para Implementar Futuramente
 
-- HATEOAS
-- Mockito
-- JUnit 5
 - Swagger
 - Upload e Download de arquivos
 - Importação e Exportação de Planilhas Excel e CSV
