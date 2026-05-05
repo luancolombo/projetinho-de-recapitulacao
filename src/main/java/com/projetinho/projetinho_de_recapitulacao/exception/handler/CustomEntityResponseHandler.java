@@ -1,6 +1,7 @@
 package com.projetinho.projetinho_de_recapitulacao.exception.handler;
 
 import com.projetinho.projetinho_de_recapitulacao.exception.ExceptionResponse;
+import com.projetinho.projetinho_de_recapitulacao.exception.RequiredObjectIsNullException;
 import com.projetinho.projetinho_de_recapitulacao.exception.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,5 +33,12 @@ public class CustomEntityResponseHandler extends ResponseEntityExceptionHandler 
                 request.getDescription(false));
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
-
+    @ExceptionHandler(RequiredObjectIsNullException.class)
+    public final ResponseEntity<ExceptionResponse> handlerBadRequestExceptions(Exception ex, WebRequest request) {
+        ExceptionResponse response = new ExceptionResponse(
+                new Date(),
+                ex.getMessage(),
+                request.getDescription(false));
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
 }

@@ -3,6 +3,7 @@ package com.projetinho.projetinho_de_recapitulacao.services;
 import com.projetinho.projetinho_de_recapitulacao.controllers.PersonController;
 import com.projetinho.projetinho_de_recapitulacao.dto.v1.PersonDTO;
 import com.projetinho.projetinho_de_recapitulacao.dto.v2.PersonDTOV2;
+import com.projetinho.projetinho_de_recapitulacao.exception.RequiredObjectIsNullException;
 import com.projetinho.projetinho_de_recapitulacao.exception.ResourceNotFoundException;
 import com.projetinho.projetinho_de_recapitulacao.mapper.custom.PersonMapper;
 import com.projetinho.projetinho_de_recapitulacao.model.Person;
@@ -12,7 +13,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.resource.ResourceUrlProvider;
 
 import java.util.List;
-import java.util.concurrent.atomic.AtomicLong;
 import java.util.logging.Logger;
 
 import static com.projetinho.projetinho_de_recapitulacao.mapper.ObjectMapper.parseListObject;
@@ -22,8 +22,6 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @Service
 public class PersonServices {
-
-    private final AtomicLong counter = new AtomicLong();
 
     @Autowired
     PersonRepository repository;
@@ -54,6 +52,7 @@ public class PersonServices {
         return dto;
     }
     public PersonDTO create(PersonDTO person){
+        if (person == null) throw new RequiredObjectIsNullException();
         logger.info("Create new person!");
         var entity = parseObject(person, Person.class);
         var dto =parseObject(repository.save(entity), PersonDTO.class);
@@ -66,6 +65,7 @@ public class PersonServices {
         return converter.convertEntityToDTO(repository.save(entity));
     }
     public PersonDTO update(PersonDTO person){
+        if (person == null) throw new RequiredObjectIsNullException();
         logger.info("Update person!");
         Person entity = repository.findById(person.getId())
                 .orElseThrow(() -> new ResourceNotFoundException("No records found for this Id!"));
