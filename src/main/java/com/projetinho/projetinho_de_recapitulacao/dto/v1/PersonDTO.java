@@ -10,6 +10,7 @@ import com.projetinho.projetinho_de_recapitulacao.serializer.GenderSerializer;
 import jakarta.validation.constraints.NotBlank;
 import org.springframework.hateoas.RepresentationModel;
 
+import java.io.Serial;
 import java.io.Serializable;
 //import java.util.Date;
 import java.util.Objects;
@@ -17,6 +18,7 @@ import java.util.Objects;
 //@JsonPropertyOrder({"id", "gender", "last_name", "first_name", "address"})
 public class PersonDTO extends RepresentationModel<PersonDTO> implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     private Long id;
