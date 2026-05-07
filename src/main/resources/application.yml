@@ -13,3 +13,6 @@ spring:
       hibernate:
     show-sql: false
     open-in-view: false
+spring-doc:
+  swagger-ui:
+    use-root-path: true
